@@ -28,7 +28,7 @@ class App extends React.Component {
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
-            <h1 className="logo">Inventory</h1>
+            Inventory
           </div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="inventory-list" icon={<UnorderedListOutlined />}>
