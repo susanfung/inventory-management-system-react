@@ -16,7 +16,7 @@ import {
   AddNewInventory
 } from './components';
 
-const { Header, Sider } = Layout;
+const { Header, Sider, Content } = Layout;
 
 class App extends React.Component {
   state = {
@@ -62,11 +62,20 @@ class App extends React.Component {
                 onClick: this.toggle,
               })}
             </Header>
-            <Switch>
-              <Route path='/' exact component={() => <InventoryList />} />
-              <Route path='/UpdateInventory' exact component={() => <UpdateInventory />} />
-              <Route path='/AddNewInventory' exact component={() => <AddNewInventory />} />
-            </Switch>
+            <Content
+              className="site-layout-background"
+              style={{
+                margin: '24px 16px',
+                padding: 24,
+                minHeight: 280,
+              }}
+            >
+              <Switch>
+                <Route path='/' exact component={() => <InventoryList />} />
+                <Route path='/UpdateInventory' exact component={() => <UpdateInventory />} />
+                <Route path='/AddNewInventory' exact component={() => <AddNewInventory />} />
+              </Switch>
+            </Content>
           </Layout>
         </Layout>
       </Router>
