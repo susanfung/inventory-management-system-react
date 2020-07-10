@@ -1,30 +1,38 @@
 import React from "react";
+import './InventoryList.css';
+import { DeleteOutlined } from '@ant-design/icons';
 
-function InventoryList() {
-  return (
-    <div className="about">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
-            />
+class InventoryList extends React.Component {
+  render() {
+    return (
+      <div className="inventory-list item-list">
+        {this.props.inventory.map(item => (
+          <div className="inventory-item">
+            <div className="button">
+              <DeleteOutlined />
+            </div>
+    
+            <div className="inventory-info">
+              <div className="inventory-head">
+                <span className="inventory-name">{item.itemName}</span>
+              </div>
+
+              <div className="details">
+                <span className="label-item">Date Added: </span>
+                <span className="add-date">{item.addDate}</span>
+              </div>
+
+              <div className="details">
+                <span className="label-item">Location: </span>
+                <span>{item.location}</span>
+              </div>
+              <div className="inventory-notes">{item.notes}</div>
+            </div>
           </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Inventory List</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
-    </div>
-  );
+    )
+  }
 }
 
 export default InventoryList;

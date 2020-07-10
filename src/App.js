@@ -20,6 +20,13 @@ import {
 const { Header, Sider, Content } = Layout;
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      myInventory: []
+    }
+  }
+
   state = {
     collapsed: false,
   };
@@ -29,6 +36,19 @@ class App extends React.Component {
       collapsed: !this.state.collapsed,
     });
   };
+
+  componentDidMount() {
+    fetch('./data-InventoryList.json')
+      .then(response => response.json())
+      .then(result => {
+        const inventory = result.map(item => {
+          return item;
+        })
+        this.setState({
+          myInventory: inventory
+        })
+      })
+  }
 
   render() {
     return (
@@ -72,7 +92,9 @@ class App extends React.Component {
               }}
             >
               <Switch>
-                <Route path='/' exact component={InventoryList} />
+                <Route path='/' exact component={(props) => (
+                  <InventoryList inventory={this.state.myInventory} />
+                )} />
                 <Route path='/UpdateInventory' exact component={UpdateInventory} />
                 <Route path='/AddNewInventory' exact component={AddNewInventory} />
                 <Route component={Error} />
