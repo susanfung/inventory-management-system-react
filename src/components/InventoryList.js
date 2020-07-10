@@ -1,5 +1,6 @@
 import React from "react";
 import './InventoryList.css';
+import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 class InventoryList extends React.Component {
@@ -9,7 +10,7 @@ class InventoryList extends React.Component {
         {this.props.inventory.map(item => (
           <div className="inventory-item">
             <div className="button">
-              <DeleteOutlined />
+              <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
             </div>
     
             <div className="inventory-info">
@@ -26,6 +27,7 @@ class InventoryList extends React.Component {
                 <span className="label-item">Location: </span>
                 <span>{item.location}</span>
               </div>
+
               <div className="inventory-notes">{item.notes}</div>
             </div>
           </div>
