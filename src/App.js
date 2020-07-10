@@ -13,7 +13,8 @@ import {
 import {
   InventoryList,
   UpdateInventory,
-  AddNewInventory
+  AddNewInventory,
+  Error
 } from './components';
 
 const { Header, Sider, Content } = Layout;
@@ -71,9 +72,10 @@ class App extends React.Component {
               }}
             >
               <Switch>
-                <Route path='/' exact component={() => <InventoryList />} />
-                <Route path='/UpdateInventory' exact component={() => <UpdateInventory />} />
-                <Route path='/AddNewInventory' exact component={() => <AddNewInventory />} />
+                <Route path='/' exact component={InventoryList} />
+                <Route path='/UpdateInventory' exact component={UpdateInventory} />
+                <Route path='/AddNewInventory' exact component={AddNewInventory} />
+                <Route component={Error} />
               </Switch>
             </Content>
           </Layout>
