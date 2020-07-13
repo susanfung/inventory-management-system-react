@@ -1,29 +1,50 @@
 import React from "react";
+import {
+  Form,
+  Input,
+  Button,
+} from 'antd';
 
 function AddNewInventory() {
   return (
-    <div className="about">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Add New Inventory</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Form
+        labelCol={{
+          span: 4,
+        }}
+        layout="vertical"
+      >
+        <Form.Item
+          name="itemName"
+          label="Item Name:"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="location"
+          label="Location:"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="notes" label="Notes:">
+          <Input.TextArea />
+        </Form.Item>
+
+        <Button type="primary" shape="round">Add New Inventory</Button>
+      </Form>
+    </>
   );
 }
 
