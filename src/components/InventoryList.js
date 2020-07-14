@@ -8,7 +8,7 @@ class InventoryList extends React.Component {
     return (
       <div className="inventory-list item-list">
         {this.props.inventory.map(item => (
-          <div className="inventory-item">
+          <div className="inventory-item" key={item.itemId}>
             <div className="button">
               <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
             </div>

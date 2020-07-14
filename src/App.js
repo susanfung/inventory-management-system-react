@@ -23,7 +23,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      myInventory: []
+      myInventory: [],
+      lastIndex: 0
     }
   }
 
@@ -42,6 +43,8 @@ class App extends React.Component {
       .then(response => response.json())
       .then(result => {
         const inventory = result.map(item => {
+          item.itemId = this.state.lastIndex;
+          this.setState({ lastIndex: this.state.lastIndex + 1 });
           return item;
         })
         this.setState({
