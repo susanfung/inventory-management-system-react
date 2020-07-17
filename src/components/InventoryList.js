@@ -19,7 +19,6 @@ const columns = [
     sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
   },
   {
-    title: 'Action',
     key: 'action',
     render: () => (
       <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
@@ -31,9 +30,13 @@ class InventoryList extends React.Component {
   render() {
     return (
       <Table
-        columns={columns}
         dataSource={this.props.inventory}
         rowKey="itemId"
+        columns={columns}
+        expandable={{
+          expandedRowRender: record => <p>{record.notes}</p>
+        }}
+        size="small"
         onChange={this.onChange}
         pagination={{ defaultPageSize: 10, showSizeChanger: true }}
       />
