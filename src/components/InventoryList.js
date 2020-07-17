@@ -1,5 +1,6 @@
 import React from "react";
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const columns = [
   {
@@ -16,6 +17,13 @@ const columns = [
     title: 'Date Added',
     dataIndex: 'addDate',
     sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: () => (
+      <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
+    ),
   },
 ];
 
