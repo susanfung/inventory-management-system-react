@@ -25,6 +25,7 @@ class InventoryList extends React.Component {
       <Table
         columns={columns}
         dataSource={this.props.inventory}
+        rowKey="itemId"
         onChange={this.onChange}
         pagination={{ defaultPageSize: 10, showSizeChanger: true }}
       />
