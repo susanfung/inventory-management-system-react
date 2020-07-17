@@ -1,6 +1,8 @@
 import React from "react";
-import { Table, Button } from 'antd';
+import { Table, Button, Input } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+
+const { Search } = Input;
 
 const columns = [
   {
@@ -27,19 +29,54 @@ const columns = [
 ];
 
 class InventoryList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { filterTable: null, columns: columns, baseData: this.props.inventory };
+  }
+
+  search = value => {
+    const { baseData } = this.state;
+    console.log("PASS", { value });
+
+    const filterTable = baseData.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+
+    this.setState({ filterTable });
+  };
+
   render() {
+    const { filterTable, columns, baseData } = this.state;
+
     return (
-      <Table
-        dataSource={this.props.inventory}
-        rowKey="itemId"
-        columns={columns}
-        expandable={{
-          expandedRowRender: record => <p>{record.notes}</p>
-        }}
-        size="small"
-        onChange={this.onChange}
-        pagination={{ defaultPageSize: 10, showSizeChanger: true }}
-      />
+      <>
+        <div align="right">
+          <Search
+            style={{ marginBottom: 10, width: 200 }}
+            placeholder="Search by..."
+            enterButton
+            onChange={e => this.search(e.target.value)}
+            onSearch={this.search}
+            allowClear="true"
+          />
+        </div>
+
+        <Table
+          dataSource={filterTable == null ? baseData : filterTable}
+          rowKey="itemId"
+          columns={columns}
+          expandable={{
+            expandedRowRender: record => <p>{record.notes}</p>
+          }}
+          size="small"
+          onChange={this.onChange}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true }}
+        />
+      </>
     )
   }
 }
