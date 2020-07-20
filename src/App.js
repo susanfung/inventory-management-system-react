@@ -24,6 +24,7 @@ class App extends React.Component {
     super();
     this.state = {
       myInventory: [],
+      loading: true,
       lastIndex: 0
     }
   }
@@ -48,7 +49,8 @@ class App extends React.Component {
           return item;
         })
         this.setState({
-          myInventory: inventory
+          myInventory: inventory,
+          loading: false
         })
       })
   }
@@ -96,7 +98,10 @@ class App extends React.Component {
             >
               <Switch>
                 <Route path='/' exact component={(props) => (
-                  <InventoryList inventory={this.state.myInventory} />
+                  <InventoryList
+                    inventory={this.state.myInventory}
+                    loading={this.state.loading}
+                  />
                 )} />
                 <Route path='/UpdateInventory' exact component={UpdateInventory} />
                 <Route path='/AddNewInventory' exact component={AddNewInventory} />

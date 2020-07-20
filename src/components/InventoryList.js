@@ -73,6 +73,7 @@ class InventoryList extends React.Component {
             expandedRowRender: record => <p>{record.notes}</p>
           }}
           size="small"
+          loading={this.props.loading}
           onChange={this.onChange}
           pagination={{ defaultPageSize: 10, showSizeChanger: true }}
         />
