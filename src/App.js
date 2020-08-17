@@ -7,12 +7,10 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UnorderedListOutlined,
-  EditOutlined,
   PlusOutlined
 } from '@ant-design/icons';
 import {
   InventoryList,
-  UpdateInventory,
   AddNewInventory,
   Error
 } from './components';
@@ -69,11 +67,6 @@ class App extends React.Component {
                   Inventory List
                 </Link>
               </Menu.Item>
-              <Menu.Item key="update-inventory" icon={<EditOutlined />}>
-                <Link to='/UpdateInventory'>
-                  Update Inventory
-                </Link>
-              </Menu.Item>
               <Menu.Item key="add-new-inventory" icon={<PlusOutlined />}>
                 <Link to='/AddNewInventory'>
                   Add New Inventory
@@ -103,7 +96,6 @@ class App extends React.Component {
                     loading={this.state.loading}
                   />
                 )} />
-                <Route path='/UpdateInventory' exact component={UpdateInventory} />
                 <Route path='/AddNewInventory' exact component={AddNewInventory} />
                 <Route component={Error} />
               </Switch>

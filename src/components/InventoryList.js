@@ -1,8 +1,26 @@
 import React from "react";
-import { Table, Button, Input } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Table, Button, Input, Modal } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
+
+function editRecord(record) {
+  Modal.confirm({
+    icon: false,
+    title: (
+      <div>
+        {record.itemName}
+      </div>
+    ),
+    content: (
+      <div>
+        <p>Location: {record.location}</p>
+        <p>Date Added: {record.addDate}</p>
+        <p>Notes: {record.notes}</p>
+      </div>
+    )
+  })
+}
 
 const columns = [
   {
@@ -22,8 +40,21 @@ const columns = [
   },
   {
     key: 'action',
-    render: () => (
-      <Button type="primary" shape="circle" icon={<DeleteOutlined />} />
+    render: (record) => (
+      <>
+        <Button
+          ghost
+          type="primary"
+          shape="circle"
+          icon={<EditOutlined />}
+          onClick={() => editRecord(record)}
+        />
+        <Button
+          type="primary"
+          shape="circle"
+          icon={<DeleteOutlined />}
+        />
+      </>
     ),
   },
 ];
