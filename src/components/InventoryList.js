@@ -1,4 +1,5 @@
 import React from "react";
+import { default as AddNewInventoryForm } from "./AddNewInventory-Form";
 import { Table, Button, Input, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
@@ -7,17 +8,14 @@ const { Search } = Input;
 function editRecord(record) {
   Modal.confirm({
     icon: false,
+    width: 1000,
     title: (
       <div>
         {record.itemName}
       </div>
     ),
     content: (
-      <div>
-        <p>Location: {record.location}</p>
-        <p>Date Added: {record.addDate}</p>
-        <p>Notes: {record.notes}</p>
-      </div>
+      <AddNewInventoryForm record={record} />
     )
   })
 }
