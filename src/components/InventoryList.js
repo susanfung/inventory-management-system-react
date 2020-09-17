@@ -1,4 +1,5 @@
 import React from "react";
+import moment from 'moment';
 import { default as AddNewInventoryForm } from "./AddNewInventory-Form";
 import { Table, Button, Input, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -16,7 +17,9 @@ function editRecord(record) {
     ),
     content: (
       <AddNewInventoryForm record={record} />
-    )
+    ),
+    maskClosable: true,
+    okText: "Submit"
   })
 }
 
@@ -34,6 +37,7 @@ const columns = [
   {
     title: 'Date Added',
     dataIndex: 'addDate',
+    render: (value) => moment(value).format('LLL'),
     sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
   },
   {
