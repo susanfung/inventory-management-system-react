@@ -6,65 +6,11 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 
-function editRecord(record) {
-  Modal.confirm({
-    icon: false,
-    width: 1000,
-    title: (
-      <div>
-        {record.itemName}
-      </div>
-    ),
-    content: (
-      <AddNewInventoryForm record={record} />
-    ),
-    maskClosable: true,
-    okText: "Submit"
-  })
-}
-
-const columns = [
-  {
-    title: 'Item',
-    dataIndex: 'itemName',
-    sorter: (a, b) => {return a.itemName.localeCompare(b.itemName)},
-  },
-  {
-    title: 'Location',
-    dataIndex: 'location',
-    sorter: (a, b) => {return a.location.localeCompare(b.location)},
-  },
-  {
-    title: 'Date Added',
-    dataIndex: 'addDate',
-    render: (value) => moment(value).format('LLL'),
-    sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
-  },
-  {
-    key: 'action',
-    render: (record) => (
-      <>
-        <Button
-          ghost
-          type="primary"
-          shape="circle"
-          icon={<EditOutlined />}
-          onClick={() => editRecord(record)}
-        />
-        <Button
-          type="primary"
-          shape="circle"
-          icon={<DeleteOutlined />}
-        />
-      </>
-    ),
-  },
-];
-
 class InventoryList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { filterTable: null, columns: columns, baseData: this.props.inventory };
+    this.state = { filterTable: null, baseData: this.props.inventory };
+    this.editRecord = this.editRecord.bind(this);
   }
 
   search = value => {
@@ -82,8 +28,64 @@ class InventoryList extends React.Component {
     this.setState({ filterTable });
   };
 
+  editRecord(record) {
+    Modal.confirm({
+      icon: false,
+      width: 1000,
+      title: (
+        <div>
+          {record.itemName}
+        </div>
+      ),
+      content: (
+        <AddNewInventoryForm record={record} />
+      ),
+      maskClosable: true,
+      okText: "Submit"
+    })
+  }
+
   render() {
-    const { filterTable, columns, baseData } = this.state;
+    const { filterTable, baseData } = this.state;
+
+    const columns = [
+      {
+        title: 'Item',
+        dataIndex: 'itemName',
+        sorter: (a, b) => {return a.itemName.localeCompare(b.itemName)},
+      },
+      {
+        title: 'Location',
+        dataIndex: 'location',
+        sorter: (a, b) => {return a.location.localeCompare(b.location)},
+      },
+      {
+        title: 'Date Added',
+        dataIndex: 'addDate',
+        render: (value) => moment(value).format('LLL'),
+        sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
+      },
+      {
+        key: 'action',
+        render: (record) => (
+          <>
+            <Button
+              ghost
+              type="primary"
+              shape="circle"
+              icon={<EditOutlined />}
+              onClick={() => this.editRecord(record)}
+            />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<DeleteOutlined />}
+              onClick={() => this.props.deleteRecord(record)}
+            />
+          </>
+        ),
+      },
+    ];
 
     return (
       <>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { without } from 'lodash';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './App.css';
@@ -24,7 +25,8 @@ class App extends React.Component {
       myInventory: [],
       loading: true,
       lastIndex: 0
-    }
+    };
+    this.deleteRecord = this.deleteRecord.bind(this);
   }
 
   state = {
@@ -36,6 +38,15 @@ class App extends React.Component {
       collapsed: !this.state.collapsed,
     });
   };
+
+  deleteRecord(record) {
+    let tempInventory = this.state.myInventory;
+    tempInventory = without(tempInventory, record);
+
+    this.setState({
+      myInventory: tempInventory
+    });
+  }
 
   componentDidMount() {
     fetch('./data-InventoryList.json')
@@ -94,6 +105,7 @@ class App extends React.Component {
                   <InventoryList
                     inventory={this.state.myInventory}
                     loading={this.state.loading}
+                    deleteRecord={this.deleteRecord}
                   />
                 )} />
                 <Route path='/AddNewInventory' exact component={AddNewInventory} />
