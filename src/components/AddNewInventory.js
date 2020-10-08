@@ -26,11 +26,11 @@ function AddNewInventory() {
         >
           <Input />
         </Form.Item>
-
-        <AddNewInventoryForm record='null' />
-
-        <Button type="primary" shape="round">Add New Inventory</Button>
       </Form>
+      
+      <AddNewInventoryForm record='null' />
+
+      <Button type="primary" shape="round">Add New Inventory</Button>
     </>
   );
 }
