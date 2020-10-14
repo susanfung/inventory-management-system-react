@@ -1,7 +1,7 @@
 import React from "react";
 import moment from 'moment';
-import { default as AddNewInventoryForm } from "./AddNewInventory-Form";
-import { Table, Button, Input, Modal } from 'antd';
+import { default as EditRecord } from "./EditRecord";
+import { Table, Button, Input } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
@@ -9,8 +9,14 @@ const { Search } = Input;
 class InventoryList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { filterTable: null, baseData: this.props.inventory };
+    this.state = {
+      filterTable: null,
+      baseData: this.props.inventory,
+      visible: false,
+      record: {}
+    };
     this.editRecord = this.editRecord.bind(this);
+    this.onCreate = this.onCreate.bind(this);
   }
 
   search = value => {
@@ -29,24 +35,16 @@ class InventoryList extends React.Component {
   };
 
   editRecord(record) {
-    Modal.confirm({
-      icon: false,
-      width: 1000,
-      title: (
-        <div>
-          {record.itemName}
-        </div>
-      ),
-      content: (
-        <AddNewInventoryForm record={record} />
-      ),
-      maskClosable: true,
-      okText: "Submit"
-    })
-  }
+    this.setState({ visible: true, record: record });
+  };
+
+  onCreate = (values) => {
+    console.log('Received values of form: ', values);
+    this.setState({ visible: false });
+  };
 
   render() {
-    const { filterTable, baseData } = this.state;
+    const { filterTable, baseData, visible, record } = this.state;
 
     const columns = [
       {
@@ -111,6 +109,15 @@ class InventoryList extends React.Component {
           loading={this.props.loading}
           onChange={this.onChange}
           pagination={{ defaultPageSize: 10, showSizeChanger: true }}
+        />
+
+        <EditRecord
+          visible={visible}
+          onCreate={this.onCreate}
+          onCancel={() => {
+            this.setState({ filterTable });
+          }}
+          record={record}
         />
       </>
     )

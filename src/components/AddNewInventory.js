@@ -1,5 +1,5 @@
 import React from "react";
-import { default as AddNewInventoryForm } from "./AddNewInventory-Form";
+import { default as InventoryForm } from "./InventoryForm";
 import {
   Form,
   Input,
@@ -28,7 +28,7 @@ function AddNewInventory() {
         </Form.Item>
       </Form>
       
-      <AddNewInventoryForm record='null' />
+      <InventoryForm record='null' />
 
       <Button type="primary" shape="round">Add New Inventory</Button>
     </>

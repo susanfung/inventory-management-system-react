@@ -4,24 +4,26 @@ import {
   Input
 } from 'antd';
 
-class AddNewInventoryForm extends React.Component {
+class InventoryForm extends React.Component {
   state = {
-    record: this.props.record,
+    form: this.props.form,
+    record: this.props.record
   };
 
   render() {
-    const { record } = this.state;
+    const { form, record } = this.state;
 
     return (
       <Form
-      labelCol={{
-        span: 4,
-      }}
-      layout="vertical"
-      initialValues={{
-        location: record.location,
-        notes: record.notes,
-      }}
+        form={form}
+        labelCol={{
+          span: 4,
+        }}
+        layout="vertical"
+        initialValues={{
+          location: record.location,
+          notes: record.notes,
+        }}
       >
         <Form.Item
           name="location"
@@ -43,4 +45,4 @@ class AddNewInventoryForm extends React.Component {
   }
 }
  
-export default AddNewInventoryForm;
+export default InventoryForm;
