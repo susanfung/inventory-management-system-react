@@ -10,9 +10,18 @@ class InventoryForm extends React.Component {
     record: this.props.record
   };
 
-  render() {
-    const { form, record } = this.state;
+  componentDidMount() {
+    if (this.state.record !== null) {
+      this.state.form.setFieldsValue({
+        location: this.state.record.location,
+        notes: this.state.record.notes,
+      });
+    }
+  }
 
+  render() {
+    const { form } = this.state;
+    
     return (
       <Form
         form={form}
@@ -20,10 +29,6 @@ class InventoryForm extends React.Component {
           span: 4,
         }}
         layout="vertical"
-        initialValues={{
-          location: record.location,
-          notes: record.notes,
-        }}
       >
         <Form.Item
           name="location"

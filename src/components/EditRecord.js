@@ -4,6 +4,7 @@ import { Modal, Form } from 'antd';
 
 const EditRecord = ({ visible, onCreate, onCancel, record }) => {
   const [form] = Form.useForm();
+
   return (
     <Modal
       visible={visible}
@@ -21,7 +22,7 @@ const EditRecord = ({ visible, onCreate, onCancel, record }) => {
           });
       }}
     >
-      <InventoryForm form={form} record={record} />
+      <InventoryForm form={form} record={record} key={record.itemId} />
     </Modal>
   );
 };

@@ -7,6 +7,8 @@ import {
 } from 'antd';
 
 function AddNewInventory() {
+  const [form] = Form.useForm();
+  
   return (
     <>
       <Form
@@ -28,7 +30,7 @@ function AddNewInventory() {
         </Form.Item>
       </Form>
       
-      <InventoryForm record='null' />
+      <InventoryForm record='null' form={form} />
 
       <Button type="primary" shape="round">Add New Inventory</Button>
     </>
