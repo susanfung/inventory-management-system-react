@@ -13,7 +13,7 @@ class InventoryList extends React.Component {
       filterTable: null,
       baseData: this.props.inventory,
       visible: false,
-      record: {}
+      record: []
     };
     this.editRecord = this.editRecord.bind(this);
     this.onCreate = this.onCreate.bind(this);
@@ -115,7 +115,7 @@ class InventoryList extends React.Component {
           visible={visible}
           onCreate={this.onCreate}
           onCancel={() => {
-            this.setState({ filterTable });
+            this.setState({ visible: false });
           }}
           record={record}
         />

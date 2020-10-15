@@ -7,7 +7,7 @@ const EditRecord = ({ visible, onCreate, onCancel, record }) => {
   return (
     <Modal
       visible={visible}
-      title="Create a new collection"
+      title={record.itemName}
       onCancel={onCancel}
       onOk={() => {
         form
