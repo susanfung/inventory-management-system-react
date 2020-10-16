@@ -22,30 +22,37 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      collapsed: false,
       myInventory: [],
       loading: true,
-      lastIndex: 0
+      lastIndex: 0,
+      visible: false,
+      record: []
     };
-    this.deleteRecord = this.deleteRecord.bind(this);
-  }
-
-  state = {
-    collapsed: false,
   };
 
   toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+    this.setState({ collapsed: !this.state.collapsed });
   };
 
-  deleteRecord(record) {
+  deleteRecord = record => {
     let tempInventory = this.state.myInventory;
     tempInventory = without(tempInventory, record);
 
-    this.setState({
-      myInventory: tempInventory
-    });
+    this.setState({ myInventory: tempInventory });
+  };
+
+  editRecord = record => {
+    this.setState({ visible: true, record: record });
+  };
+
+  onCreate = values => {
+    console.log('Received values of form: ', values);
+    this.setState({ visible: false });
+  };
+
+  onCancel = () => {
+    this.setState({ visible: false });
   }
 
   componentDidMount() {
@@ -57,10 +64,7 @@ class App extends React.Component {
           this.setState({ lastIndex: this.state.lastIndex + 1 });
           return item;
         })
-        this.setState({
-          myInventory: inventory,
-          loading: false
-        })
+        this.setState({ myInventory: inventory, loading: false })
       })
   }
 
@@ -105,7 +109,12 @@ class App extends React.Component {
                   <InventoryList
                     inventory={this.state.myInventory}
                     loading={this.state.loading}
+                    visible={this.state.visible}
+                    record={this.state.record}
                     deleteRecord={this.deleteRecord}
+                    editRecord={this.editRecord}
+                    onCreate={this.onCreate}
+                    onCancel={this.onCancel}
                   />
                 )} />
                 <Route path='/AddNewInventory' exact component={AddNewInventory} />

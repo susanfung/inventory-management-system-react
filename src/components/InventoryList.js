@@ -11,13 +11,9 @@ class InventoryList extends React.Component {
     super(props);
     this.state = {
       filterTable: null,
-      baseData: this.props.inventory,
-      visible: false,
-      record: []
+      baseData: this.props.inventory
     };
-    this.editRecord = this.editRecord.bind(this);
-    this.onCreate = this.onCreate.bind(this);
-  }
+  };
 
   search = value => {
     const { baseData } = this.state;
@@ -34,17 +30,8 @@ class InventoryList extends React.Component {
     this.setState({ filterTable });
   };
 
-  editRecord(record) {
-    this.setState({ visible: true, record: record });
-  };
-
-  onCreate = (values) => {
-    console.log('Received values of form: ', values);
-    this.setState({ visible: false });
-  };
-
   render() {
-    const { filterTable, baseData, visible, record } = this.state;
+    const { filterTable, baseData } = this.state;
 
     const columns = [
       {
@@ -60,19 +47,19 @@ class InventoryList extends React.Component {
       {
         title: 'Date Added',
         dataIndex: 'addDate',
-        render: (value) => moment(value).format('LLL'),
+        render: value => moment(value).format('LLL'),
         sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
       },
       {
         key: 'action',
-        render: (record) => (
+        render: record => (
           <>
             <Button
               ghost
               type="primary"
               shape="circle"
               icon={<EditOutlined />}
-              onClick={() => this.editRecord(record)}
+              onClick={() => this.props.editRecord(record)}
             />
             <Button
               type="primary"
@@ -99,25 +86,22 @@ class InventoryList extends React.Component {
         </div>
 
         <Table
+          size="small"
           dataSource={filterTable == null ? baseData : filterTable}
           rowKey="itemId"
           columns={columns}
+          loading={this.props.loading}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true }}
           expandable={{
             expandedRowRender: record => <p>{record.notes}</p>
           }}
-          size="small"
-          loading={this.props.loading}
-          onChange={this.onChange}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true }}
         />
 
         <EditRecord
-          visible={visible}
-          onCreate={this.onCreate}
-          onCancel={() => {
-            this.setState({ visible: false });
-          }}
-          record={record}
+          visible={this.props.visible}
+          onCreate={this.props.onCreate}
+          onCancel={this.props.onCancel}
+          record={this.props.record}
         />
       </>
     )
