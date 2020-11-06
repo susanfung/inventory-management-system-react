@@ -92,7 +92,7 @@ class InventoryList extends React.Component {
 
         <EditRecord
           visible={this.props.visible}
-          onCreate={this.props.onCreate}
+          onCreate={this.props.updateRecord}
           onCancel={this.props.onCancel}
           record={this.props.record}
         />

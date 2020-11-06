@@ -1,5 +1,5 @@
 import React from 'react';
-import { without } from 'lodash';
+import { findIndex, without } from 'lodash';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './App.css';
@@ -67,9 +67,20 @@ class App extends React.Component {
     this.setState({ visible: true, record: record });
   };
 
-  onCreate = values => {
-    console.log('Received values of form: ', values);
-    this.setState({ visible: false });
+  updateRecord = (itemId, values) => {
+    let tempInventory = this.state.inventory;
+    let itemIndex = findIndex(this.state.inventory, {
+      itemId: itemId
+    });
+
+    tempInventory[itemIndex] = {
+      ...tempInventory[itemIndex],
+      location: values.location,
+      notes: values.notes,
+      addDate: values.addDate
+    }
+
+    this.setState({ inventory: tempInventory, visible: false });
   };
 
   onCancel = () => {
@@ -133,7 +144,7 @@ class App extends React.Component {
                     clear={this.clear}
                     deleteRecord={this.deleteRecord}
                     editRecord={this.editRecord}
-                    onCreate={this.onCreate}
+                    updateRecord={this.updateRecord}
                     onCancel={this.onCancel}
                   />
                 )} />

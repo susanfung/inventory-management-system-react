@@ -2,7 +2,7 @@ import React from 'react';
 import { default as InventoryForm } from "./InventoryForm";
 import { Modal, Form } from 'antd';
 
-const EditRecord = ({ visible, onCreate, onCancel, record }) => {
+const EditRecord = ({ visible, updateRecord, onCancel, record }) => {
   const [form] = Form.useForm();
 
   return (
@@ -15,7 +15,7 @@ const EditRecord = ({ visible, onCreate, onCancel, record }) => {
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            updateRecord(record.itemId, values);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
