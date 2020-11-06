@@ -1,38 +1,22 @@
 import React from "react";
 import moment from 'moment';
 import { default as EditRecord } from "./EditRecord";
-import { Table, Button, Input } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  Table,
+  Button,
+  Input,
+  Space
+} from 'antd';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
 
 const { Search } = Input;
 
 class InventoryList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterTable: null,
-      baseData: this.props.inventory
-    };
-  };
-
-  search = value => {
-    const { baseData } = this.state;
-    console.log("PASS", { value });
-
-    const filterTable = baseData.filter(o =>
-      Object.keys(o).some(k =>
-        String(o[k])
-          .toLowerCase()
-          .includes(value.toLowerCase())
-      )
-    );
-
-    this.setState({ filterTable });
-  };
-
   render() {
-    const { filterTable, baseData } = this.state;
-
     const columns = [
       {
         title: 'Item',
@@ -75,19 +59,28 @@ class InventoryList extends React.Component {
     return (
       <>
         <div align="right">
-          <Search
-            style={{ marginBottom: 10, width: 200 }}
-            placeholder="Search by..."
-            enterButton
-            onChange={e => this.search(e.target.value)}
-            onSearch={this.search}
-            allowClear="true"
-          />
+          <Space>
+            <Search
+              style={{ marginBottom: 10, width: 200 }}
+              placeholder="Search by..."
+              defaultValue={this.props.searchTableValue}
+              enterButton
+              onSearch={this.props.search}
+              allowClear="true"
+            />
+            <Button
+              style={{ marginBottom: 10 }}
+              onClick={this.props.clear}
+            >
+              <CloseCircleOutlined />
+              Clear Search
+            </Button>
+          </Space>
         </div>
 
         <Table
           size="small"
-          dataSource={filterTable == null ? baseData : filterTable}
+          dataSource={this.props.filterTable == null ? this.props.inventory : this.props.filterTable}
           rowKey="itemId"
           columns={columns}
           loading={this.props.loading}

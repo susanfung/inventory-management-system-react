@@ -23,9 +23,11 @@ class App extends React.Component {
     super();
     this.state = {
       collapsed: false,
-      myInventory: [],
+      inventory: [],
       loading: true,
       lastIndex: 0,
+      filterTable: null,
+      searchTableValue: null,
       visible: false,
       record: []
     };
@@ -35,11 +37,30 @@ class App extends React.Component {
     this.setState({ collapsed: !this.state.collapsed });
   };
 
+  search = value => {
+    const { inventory } = this.state;
+    console.log("PASS", { value });
+
+    const filterTable = inventory.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k])
+          .toLowerCase()
+          .includes(value.toLowerCase())
+      )
+    );
+
+    this.setState({ filterTable, searchTableValue: value });
+  };
+
+  clear = () => {
+    this.setState({ filterTable: null, searchTableValue: null });
+  }
+
   deleteRecord = record => {
-    let tempInventory = this.state.myInventory;
+    let tempInventory = this.state.inventory;
     tempInventory = without(tempInventory, record);
 
-    this.setState({ myInventory: tempInventory });
+    this.setState({ inventory: tempInventory });
   };
 
   editRecord = record => {
@@ -64,7 +85,7 @@ class App extends React.Component {
           this.setState({ lastIndex: this.state.lastIndex + 1 });
           return item;
         })
-        this.setState({ myInventory: inventory, loading: false })
+        this.setState({ inventory: inventory, loading: false })
       })
   }
 
@@ -107,10 +128,9 @@ class App extends React.Component {
               <Switch>
                 <Route path='/' exact component={(props) => (
                   <InventoryList
-                    inventory={this.state.myInventory}
-                    loading={this.state.loading}
-                    visible={this.state.visible}
-                    record={this.state.record}
+                    {...this.state}
+                    search={this.search}
+                    clear={this.clear}
                     deleteRecord={this.deleteRecord}
                     editRecord={this.editRecord}
                     onCreate={this.onCreate}
