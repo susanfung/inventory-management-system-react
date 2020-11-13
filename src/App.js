@@ -26,8 +26,10 @@ class App extends React.Component {
       inventory: [],
       loading: true,
       lastIndex: 0,
+      filteredInfo: null,
+      sortedInfo: null,
       filterTable: null,
-      searchTableValue: null,
+      searchTableValue: "",
       visible: false,
       record: []
     };
@@ -37,9 +39,15 @@ class App extends React.Component {
     this.setState({ collapsed: !this.state.collapsed });
   };
 
+  handleTableChange = (pagination, filters, sorter) => {
+    this.setState({
+      filteredInfo: filters,
+      sortedInfo: sorter,
+    });
+  };
+
   search = value => {
     const { inventory } = this.state;
-    console.log("PASS", { value });
 
     const filterTable = inventory.filter(o =>
       Object.keys(o).some(k =>
@@ -76,16 +84,16 @@ class App extends React.Component {
     tempInventory[itemIndex] = {
       ...tempInventory[itemIndex],
       location: values.location,
-      notes: values.notes,
-      addDate: values.addDate
+      notes: values.notes
     }
 
-    this.setState({ inventory: tempInventory, visible: false });
+    this.setState({ inventory: tempInventory, visible: false, filterTable: null });
+    this.search(this.state.searchTableValue);
   };
 
   onCancel = () => {
     this.setState({ visible: false });
-  }
+  };
 
   componentDidMount() {
     fetch('./data-InventoryList.json')
@@ -98,7 +106,7 @@ class App extends React.Component {
         })
         this.setState({ inventory: inventory, loading: false })
       })
-  }
+  };
 
   render() {
     return (
@@ -140,6 +148,7 @@ class App extends React.Component {
                 <Route path='/' exact component={(props) => (
                   <InventoryList
                     {...this.state}
+                    handleTableChange={this.handleTableChange}
                     search={this.search}
                     clear={this.clear}
                     deleteRecord={this.deleteRecord}

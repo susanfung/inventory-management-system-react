@@ -17,22 +17,34 @@ const { Search } = Input;
 
 class InventoryList extends React.Component {
   render() {
+    let { sortedInfo } = this.props;
+    sortedInfo = sortedInfo || {};
+
     const columns = [
       {
         title: 'Item',
         dataIndex: 'itemName',
+        key: 'itemName',
         sorter: (a, b) => {return a.itemName.localeCompare(b.itemName)},
+        sortOrder: sortedInfo.columnKey === 'itemName' && sortedInfo.order,
+        ellipsis: true,
       },
       {
         title: 'Location',
         dataIndex: 'location',
+        key: 'location',
         sorter: (a, b) => {return a.location.localeCompare(b.location)},
+        sortOrder: sortedInfo.columnKey === 'location' && sortedInfo.order,
+        ellipsis: true,
       },
       {
         title: 'Date Added',
         dataIndex: 'addDate',
+        key: 'addDate',
         render: value => moment(value).format('LLL'),
         sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
+        sortOrder: sortedInfo.columnKey === 'addDate' && sortedInfo.order,
+        ellipsis: true,
       },
       {
         key: 'action',
@@ -84,6 +96,7 @@ class InventoryList extends React.Component {
           rowKey="itemId"
           columns={columns}
           loading={this.props.loading}
+          onChange={this.props.handleTableChange}
           pagination={{ defaultPageSize: 10, showSizeChanger: true }}
           expandable={{
             expandedRowRender: record => <p>{record.notes}</p>
@@ -92,7 +105,7 @@ class InventoryList extends React.Component {
 
         <EditRecord
           visible={this.props.visible}
-          onCreate={this.props.updateRecord}
+          updateRecord={this.props.updateRecord}
           onCancel={this.props.onCancel}
           record={this.props.record}
         />
