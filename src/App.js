@@ -62,13 +62,17 @@ class App extends React.Component {
 
   clear = () => {
     this.setState({ filterTable: null, searchTableValue: null });
-  }
+  };
 
   deleteRecord = record => {
     let tempInventory = this.state.inventory;
     tempInventory = without(tempInventory, record);
 
     this.setState({ inventory: tempInventory });
+  };
+
+  onCancel = () => {
+    this.setState({ visible: false });
   };
 
   editRecord = record => {
@@ -91,8 +95,12 @@ class App extends React.Component {
     this.search(this.state.searchTableValue);
   };
 
-  onCancel = () => {
-    this.setState({ visible: false });
+  addRecord = item => {
+    let tempInventory = this.state.inventory;
+    item.itemId = this.state.lastIndex;
+    item.addDate = new Date();
+    tempInventory.unshift(item);
+    this.setState({ inventory: tempInventory, lastIndex: this.state.lastIndex + 1})
   };
 
   componentDidMount() {
@@ -157,7 +165,11 @@ class App extends React.Component {
                     onCancel={this.onCancel}
                   />
                 )} />
-                <Route path='/AddNewInventory' exact component={AddNewInventory} />
+                <Route path='/AddNewInventory' exact component={(props) => (
+                  <AddNewInventory
+                    addRecord={this.addRecord}
+                  />
+                )} />
                 <Route component={Error} />
               </Switch>
             </Content>

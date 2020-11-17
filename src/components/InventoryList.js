@@ -27,7 +27,6 @@ class InventoryList extends React.Component {
         key: 'itemName',
         sorter: (a, b) => {return a.itemName.localeCompare(b.itemName)},
         sortOrder: sortedInfo.columnKey === 'itemName' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Location',
@@ -35,7 +34,6 @@ class InventoryList extends React.Component {
         key: 'location',
         sorter: (a, b) => {return a.location.localeCompare(b.location)},
         sortOrder: sortedInfo.columnKey === 'location' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         title: 'Date Added',
@@ -44,7 +42,6 @@ class InventoryList extends React.Component {
         render: value => moment(value).format('LLL'),
         sorter: (a, b) => new Date(a.addDate) - new Date(b.addDate),
         sortOrder: sortedInfo.columnKey === 'addDate' && sortedInfo.order,
-        ellipsis: true,
       },
       {
         key: 'action',

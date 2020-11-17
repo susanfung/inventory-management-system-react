@@ -6,7 +6,7 @@ import {
   Button,
 } from 'antd';
 
-function AddNewInventory() {
+const AddNewInventory = ({ addRecord }) => {
   const [form] = Form.useForm();
   
   return (
@@ -16,6 +16,7 @@ function AddNewInventory() {
           span: 4,
         }}
         layout="vertical"
+        form={form}
       >
         <Form.Item
           name="itemName"
@@ -32,7 +33,23 @@ function AddNewInventory() {
       
       <InventoryForm record='null' form={form} />
 
-      <Button type="primary" shape="round">Add New Inventory</Button>
+      <Button
+        type="primary"
+        shape="round"
+        onClick={() => {
+          form
+            .validateFields()
+            .then((values) => {
+              form.resetFields();
+              addRecord(values);
+            })
+            .catch((info) => {
+              console.log('Validate Failed:', info);
+            });
+        }}
+      >
+        Add New Inventory
+      </Button>
     </>
   );
 }
