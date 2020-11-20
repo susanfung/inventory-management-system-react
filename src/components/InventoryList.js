@@ -94,7 +94,7 @@ class InventoryList extends React.Component {
           columns={columns}
           loading={this.props.loading}
           onChange={this.props.handleTableChange}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true }}
+          pagination={this.props.pagination}
           expandable={{
             expandedRowRender: record => <p>{record.notes}</p>
           }}

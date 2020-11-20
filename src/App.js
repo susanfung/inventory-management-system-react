@@ -26,6 +26,7 @@ class App extends React.Component {
       inventory: [],
       loading: true,
       lastIndex: 0,
+      pagination: { defaultPageSize: 10, showSizeChanger: true },
       filteredInfo: null,
       sortedInfo: null,
       filterTable: null,
@@ -40,10 +41,7 @@ class App extends React.Component {
   };
 
   handleTableChange = (pagination, filters, sorter) => {
-    this.setState({
-      filteredInfo: filters,
-      sortedInfo: sorter,
-    });
+    this.setState({ pagination: pagination, filteredInfo: filters, sortedInfo: sorter });
   };
 
   search = value => {
