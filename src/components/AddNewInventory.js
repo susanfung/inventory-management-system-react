@@ -24,6 +24,7 @@ const AddNewInventory = ({ addRecord }) => {
           rules={[
             {
               required: true,
+              message: "This information is required."
             },
           ]}
         >

@@ -20,4 +20,9 @@ submit = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/section/m
 submit.click()
 time.sleep(2)
 
+#Check for form error messages
+numberOfErrorTexts = driver.find_elements_by_xpath("//*[contains(text(), 'This information is required.')]")
+
+assert len(numberOfErrorTexts) == 2
+
 driver.quit()

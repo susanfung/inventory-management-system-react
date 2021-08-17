@@ -36,6 +36,7 @@ class InventoryForm extends React.Component {
           rules={[
             {
               required: true,
+              message: "This information is required."
             },
           ]}
         >
