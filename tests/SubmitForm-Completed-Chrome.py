@@ -15,6 +15,16 @@ employeeTime = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/asi
 employeeTime.click()
 time.sleep(2)
 
+#Complete Add New Inventory  Form
+itemName = driver.find_element(By.ID, "itemName")
+location = driver.find_element(By.ID, "location")
+notes = driver.find_element(By.ID, "notes")
+
+itemName.send_keys("Test Item Name")
+location.send_keys("Test Location")
+notes.send_keys("Random Note")
+time.sleep(2)
+
 #Submit Blank Form
 submit = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/section/main/button/span")
 submit.click()
