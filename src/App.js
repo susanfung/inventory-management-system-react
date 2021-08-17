@@ -99,6 +99,7 @@ class App extends React.Component {
     item.addDate = new Date();
     tempInventory.unshift(item);
     this.setState({ inventory: tempInventory, lastIndex: this.state.lastIndex + 1})
+    alert("Submitted")
   };
 
   componentDidMount() {

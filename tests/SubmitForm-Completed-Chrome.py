@@ -25,9 +25,13 @@ location.send_keys("Test Location")
 notes.send_keys("Random Note")
 time.sleep(2)
 
-#Submit Blank Form
+#Submit Form
 submit = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/section/main/button/span")
 submit.click()
+time.sleep(2)
+
+#Accept Alert Message
+driver.switch_to.alert.accept()
 time.sleep(2)
 
 driver.quit()
