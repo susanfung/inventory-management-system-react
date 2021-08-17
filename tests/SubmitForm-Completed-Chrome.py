@@ -31,7 +31,11 @@ submit.click()
 time.sleep(2)
 
 #Accept Alert Message
-driver.switch_to.alert.accept()
+alert = driver.switch_to.alert
+
+assert alert.text == "Submitted"
+
+alert.accept()
 time.sleep(2)
 
 driver.switch_to.default_content
