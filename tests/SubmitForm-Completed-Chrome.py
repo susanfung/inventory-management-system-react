@@ -34,4 +34,11 @@ time.sleep(2)
 driver.switch_to.alert.accept()
 time.sleep(2)
 
+driver.switch_to.default_content
+
+#Check Inventory List for submission
+inventoryList = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/aside/div/ul/li[1]/span[2]/a")
+inventoryList.click()
+time.sleep(2)
+
 driver.quit()
