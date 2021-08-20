@@ -4,6 +4,7 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
@@ -40,9 +41,26 @@ time.sleep(2)
 
 driver.switch_to.default_content
 
-#Check Inventory List for submission
+#Open Inventory List
 inventoryList = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/aside/div/ul/li[1]/span[2]/a")
 inventoryList.click()
 time.sleep(2)
+
+#Check for new submission on Inventory List
+plusButton = driver.find_element(By.XPATH, "//*[@id=\"container\"]/section/section/main/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[1]/button")
+plusButton.click()
+time.sleep(2)
+
+submissionItem = driver.find_elements_by_xpath("//*[@id=\"container\"]/section/section/main/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[2]")
+submissionLocation = driver.find_elements_by_xpath("//*[@id=\"container\"]/section/section/main/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[3]")
+submissionDateAdded = driver.find_elements_by_xpath("//*[@id=\"container\"]/section/section/main/div[2]/div/div/div/div/div/table/tbody/tr[1]/td[4]")
+submissionNotes = driver.find_elements_by_xpath("//*[@id=\"container\"]/section/section/main/div[2]/div/div/div/div/div/table/tbody/tr[2]/td/p")
+
+dateToday = datetime.now()
+
+assert submissionItem[0].text == "Test Item Name"
+assert submissionLocation[0].text == "Test Location"
+assert submissionDateAdded[0].text == dateToday.strftime("%B %d, %Y %H:%M %p")
+assert submissionNotes[0].text == "Random Note"
 
 driver.quit()
